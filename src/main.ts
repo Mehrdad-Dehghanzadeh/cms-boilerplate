@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module.js';
 import process from 'node:process';
-import { PrismaPg } from '@prisma/adapter-pg';
 
 
 async function bootstrap() {

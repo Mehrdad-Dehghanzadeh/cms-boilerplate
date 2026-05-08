@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "resolvePackageJsonExports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
@@ -20,6 +20,21 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@config": ["./src/config"],
+      "@config/*": ["./config/*"],
+      "@common": ["./src/common"],
+      "@common/*": ["./src/common/*"],
+      "@core": ["./src/core"],
+      "@core/*": ["./src/core/*"],
+      "@modules": ["./src/modules/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@shared": ["./src/shared"],
+      "@shared/*": ["./src/shared/*"],
+      "@infrastructure": ["./src/infrastructure"],
+      "@infrastructure/*": ["./src/infrastructure/*"]
+    }
   }
 }
