@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module.js';
+import { AppModule } from './app.module';
 import process from 'node:process';
 
 async function bootstrap() {
@@ -7,4 +7,5 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 3000);
   console.log(`app is ready on ${process.env.PORT}`);
 }
+
 bootstrap();

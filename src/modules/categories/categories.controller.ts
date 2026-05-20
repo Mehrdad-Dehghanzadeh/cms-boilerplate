@@ -1,9 +1,13 @@
+import { Public } from '@common/decorators';
 import { Controller, Get } from '@nestjs/common';
 
 @Controller('categories')
 export class CategoriesController {
+  @Public()
   @Get()
   findAll() {
-    return 'get find all';
+    const t = 1
+    const str = 'get find all';
+    return str;
   }
 }
