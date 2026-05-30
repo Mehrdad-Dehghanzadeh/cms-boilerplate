@@ -1,9 +1,9 @@
--- ساخت کاربر
+-- create user
 CREATE ROLE cms_user
 WITH LOGIN
 PASSWORD '1';
 
--- ساخت دیتابیس با collation فارسی و owner
+
 CREATE DATABASE cms
 WITH
     OWNER = cms_user

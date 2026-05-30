@@ -1,5 +1,7 @@
-import { Module } from '@nestjs/common';
-import { CategoriesModule } from '@modules/categories/categories.module';
+import { Module } from '@nestjs/common'
+import { CategoriesModule } from '@modules/categories/categories.module'
 
-@Module({ imports: [CategoriesModule] })
+@Module({
+  imports: [CategoriesModule]
+})
 export class GatewayModule {}
