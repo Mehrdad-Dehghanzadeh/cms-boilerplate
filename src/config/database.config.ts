@@ -1,5 +1,5 @@
-import type { DataSourceOptions } from 'typeorm';
-import { isDev } from '@shared/utils';
+import type { DataSourceOptions } from 'typeorm'
+import { isProd } from '@shared/utils'
 
 export function getDBConfig(): DataSourceOptions {
   return {
@@ -9,6 +9,7 @@ export function getDBConfig(): DataSourceOptions {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    synchronize: isDev(),
-  };
+    synchronize: isProd(),
+    entities: [__dirname + '../common/entities/*{.ts}']
+  }
 }
