@@ -1,5 +1,5 @@
-import { Public } from '@common/decorators'
 import { Controller, Get } from '@nestjs/common'
+import { Public } from 'common/decorators'
 
 @Controller('categories')
 export class CategoriesController {

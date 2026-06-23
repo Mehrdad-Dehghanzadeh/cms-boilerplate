@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { getDBConfig } from '@config';
+import { getDBConfig } from 'config';
 
 export const databaseProviders = [
   {

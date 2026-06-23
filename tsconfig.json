@@ -13,7 +13,7 @@
     "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
@@ -21,23 +21,7 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@/*": ["./src/*"],
-      "@config": ["./src/config"],
-      "@config/*": ["./config/*"],
-
-      "@common": ["./src/common"],
-      "@common/*": ["./src/common/*"],
-
-      "@modules": ["./src/modules"],
-      "@modules/*": ["./src/modules/*"],
-
-      "@shared": ["./src/shared"],
-      "@shared/*": ["./src/shared/*"],
-
-      "@infrastructure": ["./src/infrastructure"],
-      "@infrastructure/*": ["./src/infrastructure/*"]
-    }
+    "paths": {}
   },
 
   "include": ["./global.d.ts", "src/**/*.ts", "src/**/*.d.ts"]

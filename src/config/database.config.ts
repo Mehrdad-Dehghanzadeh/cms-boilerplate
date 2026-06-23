@@ -1,5 +1,5 @@
 import type { DataSourceOptions } from 'typeorm'
-import { isProd } from '@shared/utils'
+import { isProd } from 'shared/utils'
 
 export function getDBConfig(): DataSourceOptions {
   return {
