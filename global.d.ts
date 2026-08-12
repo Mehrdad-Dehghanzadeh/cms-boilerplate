@@ -1,2 +1,2 @@
-type TData<T = any> = Record<'string', T>
+type TData<T = unknown> = Record<string, T>
 type EmptyString = ''

@@ -2,80 +2,87 @@
  *  Deep Freeze Object
  ***********************/
 export function deepFreeze<T>(obj: T): Readonly<T> {
-  Object.freeze(obj);
+  if (
+    obj === null ||
+    (typeof obj !== 'object' && typeof obj !== 'function') ||
+    Object.isFrozen(obj)
+  ) {
+    return obj
+  }
+
+  Object.freeze(obj)
 
   Object.getOwnPropertyNames(obj).forEach(function (prop: string) {
-    const objectProp: any = obj[prop as keyof typeof obj];
+    const objectProp = obj[prop as keyof typeof obj]
     if (
       objectProp !== null &&
       (typeof objectProp === 'object' || typeof objectProp === 'function') &&
       !Object.isFrozen(objectProp)
     ) {
-      deepFreeze(objectProp);
+      deepFreeze(objectProp)
     }
-  });
+  })
 
-  return obj;
+  return obj
 }
 
 /**
  *  Check Object Is Empty
  ***************************/
-export function isEmpty(obj: any): boolean {
-  return Object.keys(obj).length === 0;
+export function isEmpty(obj: unknown): boolean {
+  return obj !== null && typeof obj === 'object' && Object.keys(obj).length === 0
 }
 
 /**
  *  Convert Object To Array
  ***************************/
-export function objectToArray(obj: any) {
+export function objectToArray<T extends object>(obj: T) {
   return !isEmpty(obj)
     ? Object.entries(obj).map(([key, value]) => {
-        return { [key]: value };
+        return { [key]: value }
       })
-    : [];
+    : []
 }
 
 /**
  * Deep Clone Object
  ************************/
 export function deepClone<T>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj));
+  return structuredClone(obj)
 }
 
 /**
  * remove keyof object
  *****************************/
-export function omit<T extends object>(obj: T, arr: string[]) {
-  const exclude = new Set(arr);
-  exclude.forEach((e: string) => delete obj[e as keyof T]);
+export function omit<T extends object>(obj: T, keys: readonly (keyof T)[]): void {
+  keys.forEach((key) => Reflect.deleteProperty(obj, key))
 }
 
 /**
  * remove keyof object and clone
  *****************************************/
-export function cloneOmit<T extends object>(obj: T, arr: string[]): Partial<T> {
-  const value = deepClone(obj);
-  omit(value, arr);
-  return value;
+export function cloneOmit<T extends object>(
+  obj: T,
+  keys: readonly (keyof T)[]
+): Partial<T> {
+  const value = deepClone(obj)
+  omit(value, keys)
+  return value
 }
 
 /**
  * get value object and subObject in this object
  *******************************************************/
-export function getValueObject(obj: any, prop: string): any {
-  if (typeof obj === 'undefined' || obj === null) {
-    console.error(new Error(`obj undefined or null: ${obj}.${prop}`));
-    return undefined;
+export function getValueObject(obj: unknown, path: string): unknown {
+  if (obj === undefined || obj === null || path.trim() === '') {
+    return undefined
   }
 
-  let _index = prop.indexOf('.');
-  if (_index > -1) {
-    return getValueObject(
-      obj[prop.substring(0, _index)],
-      prop.substr(_index + 1),
-    );
-  }
+  return path.split('.').reduce<unknown>((value, key) => {
+    if (value === null || typeof value !== 'object') {
+      return undefined
+    }
 
-  return obj[prop];
+    return (value as Record<string, unknown>)[key]
+  }, obj)
 }

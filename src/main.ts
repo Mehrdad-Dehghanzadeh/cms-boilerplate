@@ -1,11 +1,22 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import process from 'node:process';
+import { Logger } from 'nestjs-pino'
+import { NestFactory } from '@nestjs/core'
+import { ConfigService } from '@nestjs/config'
+import process from 'node:process'
+import { AppModule } from './app.module'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
-  console.log(`app is ready on ${process.env.PORT}`);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true })
+  const configService = app.get(ConfigService)
+  const port = configService.getOrThrow<number>('app.port')
+
+  app.useLogger(app.get(Logger))
+  app.enableShutdownHooks()
+
+  await app.listen(port)
+  app.get(Logger).log(`Application is listening on port ${port}`, 'Bootstrap')
 }
 
-bootstrap();
+void bootstrap().catch((error: unknown) => {
+  console.error('Application failed to start', error)
+  process.exitCode = 1
+})

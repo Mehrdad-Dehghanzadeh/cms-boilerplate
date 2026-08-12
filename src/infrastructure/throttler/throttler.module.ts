@@ -1,10 +1,23 @@
-import { ThrottlerModule } from '@nestjs/throttler'
+import { Module } from '@nestjs/common'
+import { APP_GUARD } from '@nestjs/core'
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 
-export const ThrottlerAppModule = ThrottlerModule.forRoot({
-  throttlers: [
+@Module({
+  imports: [
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60_000,
+          limit: 30
+        }
+      ]
+    })
+  ],
+  providers: [
     {
-      ttl: 60000,
-      limit: 30
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
     }
   ]
 })
+export class ThrottlerAppModule {}

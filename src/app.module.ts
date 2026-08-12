@@ -1,15 +1,25 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { GatewayModule } from 'modules/gateway.module'
-import { DatabaseModule, LoggingModule, ThrottlerAppModule } from 'infrastructure'
+import { appConfig, databaseConfig, validateEnvironment } from './config'
+import {
+  DatabaseModule,
+  LoggingModule,
+  ThrottlerAppModule
+} from './infrastructure'
+import { GatewayModule } from './modules/gateway.module'
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+      load: [appConfig, databaseConfig],
+      validate: validateEnvironment
+    }),
     ThrottlerAppModule,
     LoggingModule,
-    GatewayModule,
-    DatabaseModule
+    DatabaseModule,
+    GatewayModule
   ]
 })
 export class AppModule {}

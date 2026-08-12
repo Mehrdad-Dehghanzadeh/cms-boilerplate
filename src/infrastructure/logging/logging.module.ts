@@ -1,7 +1,8 @@
-import { LoggerModule } from 'nestjs-pino';
+import { LoggerModule } from 'nestjs-pino'
 
 export const LoggingModule = LoggerModule.forRoot({
   pinoHttp: {
+    autoLogging: true,
     transport: {
       target: 'pino-roll',
       options: {
@@ -10,8 +11,8 @@ export const LoggingModule = LoggerModule.forRoot({
         dateFormat: 'yyyy-MM-dd',
         size: '10m',
         mkdir: true,
-        sync: true, 
-      },
-    },
-  },
-});
+        sync: false
+      }
+    }
+  }
+})

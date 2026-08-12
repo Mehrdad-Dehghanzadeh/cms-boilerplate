@@ -1,98 +1,139 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# CMS Boilerplate
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+یک API ماژولار برای شروع پروژه‌های CMS بر پایه NestJS، TypeORM و PostgreSQL.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## قابلیت‌های فعلی
 
-## Description
+- NestJS 11 و TypeScript
+- اتصال PostgreSQL با TypeORM
+- migration به‌جای `synchronize`
+- اعتبارسنجی متغیرهای محیطی هنگام startup
+- لاگ ساختاریافته و چرخش روزانه فایل‌های log
+- محدودیت سراسری ۳۰ درخواست در هر ۶۰ ثانیه
+- CRUD کامل دسته‌بندی‌ها
+- تست واحد و e2e
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## پیش‌نیازها
 
-## Project setup
+- Node.js 22 یا جدیدتر
+- npm 8 یا جدیدتر
+- PostgreSQL
+
+## راه‌اندازی
 
 ```bash
-$ npm install
+npm ci
+cp sample.env .env
 ```
 
-## Compile and run the project
+مقادیر `.env`، به‌خصوص رمز دیتابیس، را متناسب با محیط خود تغییر دهید.
+
+برای ایجاد کاربر و دیتابیس می‌توانید فایل زیر را با یک کاربر مدیر PostgreSQL اجرا کنید:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+psql -U postgres -f database-query.sql
 ```
 
-## Run tests
+سپس ساختار دیتابیس را ایجاد کنید:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run migration:run
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+اجرای محیط توسعه:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+برنامه به‌صورت پیش‌فرض روی پورت مشخص‌شده در `.env` اجرا می‌شود.
 
-## Resources
+## متغیرهای محیطی
 
-Check out a few resources that may come in handy when working with NestJS:
+| متغیر | توضیح | نمونه |
+| --- | --- | --- |
+| `NODE_ENV` | یکی از `development`، `test` یا `production` | `development` |
+| `PORT` | پورت HTTP برنامه | `1010` |
+| `DB_TYPE` | نوع دیتابیس؛ فعلاً فقط PostgreSQL | `postgres` |
+| `DB_HOST` | میزبان دیتابیس | `localhost` |
+| `DB_PORT` | پورت دیتابیس | `5432` |
+| `DB_USERNAME` | نام کاربری دیتابیس | `cms_user` |
+| `DB_PASSWORD` | رمز قوی و غیرقابل‌اشتراک | — |
+| `DB_NAME` | نام دیتابیس | `cms` |
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+برنامه در صورت نبودن یا نامعتبر بودن هر یک از مقادیر ضروری متوقف می‌شود.
 
-## Support
+## API دسته‌بندی‌ها
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+| متد | مسیر | توضیح |
+| --- | --- | --- |
+| `POST` | `/categories` | ایجاد دسته‌بندی |
+| `GET` | `/categories` | دریافت همه دسته‌بندی‌ها |
+| `GET` | `/categories/:id` | دریافت یک دسته‌بندی |
+| `PATCH` | `/categories/:id` | ویرایش دسته‌بندی |
+| `DELETE` | `/categories/:id` | حذف دسته‌بندی |
 
-## Stay in touch
+نمونه body:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```json
+{
+  "name": "News",
+  "slot": "top-news",
+  "isActive": true
+}
+```
 
-## License
+مقدار `slot` فقط می‌تواند شامل حروف کوچک انگلیسی، عدد و خط تیره باشد. `name` و
+`slot` در دیتابیس یکتا هستند.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## migration
+
+```bash
+# اجرای migrationهای اجرا‌نشده
+npm run migration:run
+
+# بازگرداندن آخرین migration
+npm run migration:revert
+
+# ایجاد migration خالی
+npm run migration:create -- src/infrastructure/database/migrations/migration-name
+
+# تولید migration از تغییر entityها
+npm run migration:generate -- src/infrastructure/database/migrations/migration-name
+```
+
+گزینه TypeORM `synchronize` در همه محیط‌ها غیرفعال است. تغییر schema در production
+باید فقط از طریق migration انجام شود.
+
+## کنترل کیفیت
+
+```bash
+npm run typecheck
+npm run lint
+npm run format:check
+npm test
+npm run test:e2e
+npm run build
+```
+
+برای اصلاح خودکار lint و فرمت:
+
+```bash
+npm run lint:fix
+npm run format
+```
+
+## production
+
+```bash
+npm ci
+npm run build
+npm run migration:run
+NODE_ENV=production npm run start:prod
+```
+
+پوشه `logs` هنگام اجرا ایجاد می‌شود و در Git ثبت نخواهد شد.
+
+## مجوز
+
+[MIT](LICENSE)

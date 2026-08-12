@@ -1,13 +1,13 @@
--- create user
+-- Run this file once with psql as a PostgreSQL administrator.
+-- The password is requested interactively and is not stored in source control.
+\prompt 'Password for cms_user: ' cms_password
+
 CREATE ROLE cms_user
 WITH LOGIN
-PASSWORD '1';
-
+PASSWORD :'cms_password';
 
 CREATE DATABASE cms
 WITH
     OWNER = cms_user
     ENCODING = 'UTF8'
-    LC_COLLATE = 'fa_IR.UTF-8'
-    LC_CTYPE = 'fa_IR.UTF-8'
     TEMPLATE = template0;
