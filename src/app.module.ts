@@ -18,7 +18,6 @@ import { GatewayModule } from './modules/gateway.module'
     }),
     ThrottlerAppModule,
     LoggingModule,
-    DatabaseModule,
     GatewayModule
   ]
 })
