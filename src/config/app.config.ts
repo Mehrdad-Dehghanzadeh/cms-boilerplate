@@ -28,25 +28,21 @@ export function validateEnvironment(
 ): Record<string, unknown> {
   const nodeEnv = String(environment.NODE_ENV ?? 'development')
 
-  if (!SUPPORTED_ENVIRONMENTS.includes(nodeEnv as (typeof SUPPORTED_ENVIRONMENTS)[number])) {
+  if (
+    !SUPPORTED_ENVIRONMENTS.includes(nodeEnv as (typeof SUPPORTED_ENVIRONMENTS)[number])
+  ) {
     throw new Error(`NODE_ENV must be one of: ${SUPPORTED_ENVIRONMENTS.join(', ')}`)
-  }
-
-  const dbType = String(environment.DB_TYPE ?? '')
-  if (dbType !== 'postgres') {
-    throw new Error('DB_TYPE must be postgres')
   }
 
   return {
     ...environment,
     NODE_ENV: nodeEnv,
     PORT: parsePort(environment.PORT, 'PORT', 3000),
-    DB_TYPE: dbType,
-    DB_HOST: requireString(environment, 'DB_HOST'),
-    DB_PORT: parsePort(environment.DB_PORT, 'DB_PORT'),
-    DB_USERNAME: requireString(environment, 'DB_USERNAME'),
-    DB_PASSWORD: requireString(environment, 'DB_PASSWORD'),
-    DB_NAME: requireString(environment, 'DB_NAME')
+    PGHOST: requireString(environment, 'PGHOST'),
+    PGPORT: parsePort(environment.PGPORT, 'PGPORT'),
+    PGUSER: requireString(environment, 'PGUSER'),
+    PGPASSWORD: requireString(environment, 'PGPASSWORD'),
+    PGDATABASE: requireString(environment, 'PGDATABASE')
   }
 }
 

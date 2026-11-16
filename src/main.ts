@@ -3,7 +3,6 @@ import { NestFactory } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
 import process from 'node:process'
 import { AppModule } from './app.module'
-import { Client } from 'pg'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true })
