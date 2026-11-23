@@ -1,12 +1,8 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { appConfig, databaseConfig, validateEnvironment } from './config'
-import {
-  DatabaseModule,
-  LoggingModule,
-  ThrottlerAppModule
-} from './infrastructure'
-import { GatewayModule } from './modules/gateway.module'
+import { appConfig, databaseConfig, validateEnvironment } from 'config'
+import { DatabaseModule, LoggingModule, ThrottlerAppModule } from './infrastructure'
+import { GatewayModule } from 'modules/gateway.module'
 
 @Module({
   imports: [

@@ -1,12 +1,10 @@
 # CMS Boilerplate
 
-یک API ماژولار برای شروع پروژه‌های CMS بر پایه NestJS، TypeORM و PostgreSQL.
+یک API ماژولار برای شروع پروژه‌های CMS بر پایه NestJS، و PostgreSQL.
 
 ## قابلیت‌های فعلی
 
 - NestJS 11 و TypeScript
-- اتصال PostgreSQL با TypeORM
-- migration به‌جای `synchronize`
 - اعتبارسنجی متغیرهای محیطی هنگام startup
 - لاگ ساختاریافته و چرخش روزانه فایل‌های log
 - محدودیت سراسری ۳۰ درخواست در هر ۶۰ ثانیه
@@ -101,10 +99,6 @@ npm run migration:create -- src/infrastructure/database/migrations/migration-nam
 # تولید migration از تغییر entityها
 npm run migration:generate -- src/infrastructure/database/migrations/migration-name
 ```
-
-گزینه TypeORM `synchronize` در همه محیط‌ها غیرفعال است. تغییر schema در production
-باید فقط از طریق migration انجام شود.
-
 ## کنترل کیفیت
 
 ```bash
