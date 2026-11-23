@@ -1,5 +1,5 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common'
-import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
+import { PinoLogger } from 'nestjs-pino'
 import { Pool } from 'pg'
 
 @Injectable()
