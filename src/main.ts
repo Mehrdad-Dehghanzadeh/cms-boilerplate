@@ -1,5 +1,6 @@
 import { Logger } from 'nestjs-pino'
 import { NestFactory } from '@nestjs/core'
+import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import process from 'node:process'
 import { AppModule } from './app.module'
@@ -11,6 +12,13 @@ async function bootstrap() {
 
   app.useLogger(app.get(Logger))
   app.enableShutdownHooks()
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true
+    })
+  )
 
   await app.listen(port)
   app.get(Logger).log(`Application is listening on port ${port}`, 'Bootstrap')
