@@ -1,6 +1,6 @@
 import { Logger } from 'nestjs-pino'
 import { NestFactory } from '@nestjs/core'
-import { ValidationPipe } from '@nestjs/common'
+import { ValidationPipe, BadRequestException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import process from 'node:process'
 import { AppModule } from './app.module'
@@ -16,7 +16,16 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
-      whitelist: true
+      whitelist: true,
+      exceptionFactory: (errors) => {
+        return new BadRequestException({
+          message: 'اطلاعات ارسالی معتبر نیست',
+          errors: errors.map((error) => ({
+            field: error.property,
+            constraints: error.constraints
+          }))
+        })
+      }
     })
   )
 

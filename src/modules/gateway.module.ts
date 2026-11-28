@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Module,  } from '@nestjs/common'
 import { CategoriesModule } from './categories/categories.module'
 
 @Module({
